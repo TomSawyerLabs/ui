@@ -24,8 +24,8 @@
   },
   "scripts": {
     "generate": "bun scripts/generate-logo.mjs",
-    "build": "bun run generate && tsdown",
-    "dev": "bun run generate && tsdown --watch",
+    "build": "bun run generate && tsdown src/index.ts --format esm --dts --clean --external react --external react-dom --external react/jsx-runtime",
+    "dev": "bun run generate && tsdown src/index.ts --format esm --dts --watch --external react --external react-dom --external react/jsx-runtime",
     "prepare": "bun run build",
     "hooks": "lefthook install",
     "fmt": "oxfmt --write .",
