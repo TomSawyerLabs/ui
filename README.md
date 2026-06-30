@@ -13,11 +13,22 @@ consumed by React Router, Next, Vite SPAs, etc.
 Consumed as a git dependency (no registry publish required):
 
 ```bash
-bun add github:TomSawyerLabs/ui#v0.1.0
+bun add github:TomSawyerLabs/ui#v0.1.2
 ```
 
 Pin to a tag (or commit) so consumers get reproducible builds. The package builds
-itself on install via the `prepare` lifecycle, so `dist/` is not committed.
+itself on install via the `prepare` lifecycle (tsdown for the JS bundle, `tsc` for
+the `.d.ts`), so `dist/` is not committed.
+
+**Required:** Bun blocks dependency lifecycle scripts by default, so the consumer
+**must** mark this package as trusted or the build won't run (you'd get
+`dist/index.js` missing). Add to the consuming app's `package.json`:
+
+```json
+"trustedDependencies": ["@tomsawyerlabs/ui"]
+```
+
+This is honored non-interactively, so CI works too.
 
 `react` and `react-dom` (^19) are peer dependencies — the consuming app provides them.
 
@@ -61,7 +72,7 @@ import { Logo } from "@tomsawyerlabs/ui";
 
 ```bash
 bun install        # also builds via prepare
-bun run build      # generate logo + tsdown bundle (ESM + d.ts)
+bun run build      # generate logo + tsdown JS bundle + tsc .d.ts
 bun run dev        # watch build
 bun run typecheck
 bun run fmt
