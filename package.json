@@ -24,7 +24,7 @@
   },
   "scripts": {
     "generate": "bun scripts/generate-logo.mjs",
-    "build": "bun run generate && tsdown src/index.ts --format esm --dts --clean --external react --external react-dom --external react/jsx-runtime",
+    "build": "bun run generate && tsdown src/index.ts --format esm --clean --external react --external react-dom --external react/jsx-runtime && tsc -p tsconfig.json --emitDeclarationOnly --declaration --outDir dist --noEmit false",
     "dev": "bun run generate && tsdown src/index.ts --format esm --dts --watch --external react --external react-dom --external react/jsx-runtime",
     "prepare": "bun run build",
     "hooks": "lefthook install",

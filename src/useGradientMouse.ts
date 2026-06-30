@@ -11,7 +11,7 @@ const SPOTS = [
 // Attraction model: spots drift toward cursor with spring damping. Writes
 // --gx{n}/--gy{n} custom properties on <html>, consumed by the gradient in
 // styles.css. Safe under SSG/prerender: the effect only runs in the browser.
-export function useGradientMouse() {
+export function useGradientMouse(): void {
   useEffect(() => {
     let mouseX = 50;
     let mouseY = 50;

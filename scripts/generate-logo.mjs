@@ -9,7 +9,7 @@ const outUrl = new URL("../src/logo.generated.ts", import.meta.url);
 const svg = readFileSync(svgUrl, "utf8").trim();
 
 const out = `// AUTO-GENERATED from logo.svg by scripts/generate-logo.mjs. Do not edit.
-export const logoSvg = ${JSON.stringify(svg)};
+export const logoSvg: string = ${JSON.stringify(svg)};
 `;
 
 writeFileSync(outUrl, out);
