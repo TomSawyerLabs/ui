@@ -1,0 +1,49 @@
+{
+  "name": "@tomsawyerlabs/ui",
+  "version": "0.1.0",
+  "description": "Tom Sawyer Labs shared design system: interactive gradient background, base styling, logo, and layout shell.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TomSawyerLabs/ui.git"
+  },
+  "files": [
+    "dist",
+    "src/styles.css"
+  ],
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./styles.css": "./src/styles.css"
+  },
+  "scripts": {
+    "generate": "bun scripts/generate-logo.mjs",
+    "build": "bun run generate && tsdown",
+    "dev": "bun run generate && tsdown --watch",
+    "prepare": "bun run build",
+    "hooks": "lefthook install",
+    "fmt": "oxfmt --write .",
+    "fmt:check": "oxfmt --check .",
+    "typecheck": "bun run generate && tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "lefthook": "^2.1.4",
+    "oxfmt": "^0.43.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tsdown": "^0.15.6",
+    "typescript": "^5.7.3"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}

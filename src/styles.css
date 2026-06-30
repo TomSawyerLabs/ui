@@ -1,0 +1,92 @@
+/*
+ * Tom Sawyer Labs base design system.
+ * Import once at the app root: `import "@tomsawyerlabs/ui/styles.css";`
+ *
+ * The --gx{n}/--gy{n} custom properties are animated by <GradientBackground />
+ * (the useGradientMouse hook). Without it the gradient renders at its static
+ * fallback positions.
+ */
+
+:root {
+  color-scheme: light dark;
+  --gs1: rgba(245, 158, 11, 0.25);
+  --gs2: rgba(20, 184, 166, 0.22);
+  --gs3: rgba(99, 102, 241, 0.2);
+  --gs4: rgba(236, 72, 153, 0.18);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --gs1: rgba(245, 158, 11, 0.12);
+    --gs2: rgba(20, 184, 166, 0.1);
+    --gs3: rgba(99, 102, 241, 0.1);
+    --gs4: rgba(236, 72, 153, 0.09);
+  }
+}
+
+html {
+  min-height: 100%;
+  background-color: Canvas;
+  background-image:
+    radial-gradient(
+      ellipse at var(--gx1, 15%) var(--gy1, 20%),
+      var(--gs1) 0%,
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse at var(--gx2, 85%) var(--gy2, 10%),
+      var(--gs2) 0%,
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse at var(--gx3, 70%) var(--gy3, 80%),
+      var(--gs3) 0%,
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse at var(--gx4, 30%) var(--gy4, 90%),
+      var(--gs4) 0%,
+      transparent 45%
+    );
+  background-repeat: no-repeat;
+}
+
+body {
+  margin: 0 2rem;
+  padding: 0;
+  font-family: system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  color: CanvasText;
+  text-align: center;
+}
+
+h1 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+p {
+  font-size: 0.95rem;
+  opacity: 0.8;
+}
+
+.tsl-logo {
+  width: 100%;
+  max-width: 600px;
+  line-height: 0;
+}
+
+.tsl-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding: 0.75rem;
+  font-size: 0.8rem;
+  opacity: 0.3;
+}
