@@ -1,5 +1,3 @@
 node_modules/
-dist/
-src/logo.generated.ts
 .env
 .env.local

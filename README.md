@@ -4,33 +4,38 @@ The shared Tom Sawyer Labs design system: the interactive gradient background,
 base styling, wordmark, and layout shell used across TSL web properties
 (public and internal).
 
-This is a framework-agnostic React component package — plain React 19 components,
-a hook, and a stylesheet. It has no dependency on any app framework, so it can be
-consumed by React Router, Next, Vite SPAs, etc.
+It ships **TypeScript source** (no build step, no published artifacts) — the
+consuming app's bundler compiles it. This keeps distribution dead simple: a plain
+git dependency with nothing to build on install.
 
 ## Install
 
-Consumed as a git dependency (no registry publish required):
+Consumed as a git dependency (no registry, no publish):
 
 ```bash
-bun add github:TomSawyerLabs/ui#v0.1.2
+bun add github:TomSawyerLabs/ui#v0.2.0
 ```
 
-Pin to a tag (or commit) so consumers get reproducible builds. The package builds
-itself on install via the `prepare` lifecycle (tsdown for the JS bundle, `tsc` for
-the `.d.ts`), so `dist/` is not committed.
+Pin to a tag (or commit) for reproducibility. Because the package ships source,
+there's **no `prepare`/build, no committed `dist/`, and no `trustedDependencies`**
+to configure — install just clones the source and the consumer transpiles it.
 
-**Required:** Bun blocks dependency lifecycle scripts by default, so the consumer
-**must** mark this package as trusted or the build won't run (you'd get
-`dist/index.js` missing). Add to the consuming app's `package.json`:
+### Requirements for consumers
 
-```json
-"trustedDependencies": ["@tomsawyerlabs/ui"]
-```
+- **A bundler that compiles TS/TSX** (Vite, etc.). The package is imported as
+  source, not as prebuilt JS. All current TSL sites are Vite + React Router.
+- **`react` / `react-dom` ^19** — peer dependencies the app provides.
+- The wordmark is imported via Vite's `?raw` suffix, so the consumer needs
+  `vite/client` types (React Router apps have them).
+- **SSR / SSG note:** if you prerender or server-render, mark the package
+  `noExternal` so it's transpiled in the server build too:
 
-This is honored non-interactively, so CI works too.
-
-`react` and `react-dom` (^19) are peer dependencies — the consuming app provides them.
+  ```ts
+  // vite.config.ts
+  export default defineConfig({
+    ssr: { noExternal: ["@tomsawyerlabs/ui"] },
+  });
+  ```
 
 ## Usage
 
@@ -70,27 +75,27 @@ import { Logo } from "@tomsawyerlabs/ui";
 
 ## Develop
 
+There's no build — just typecheck and format:
+
 ```bash
-bun install        # also builds via prepare
-bun run build      # generate logo + tsdown JS bundle + tsc .d.ts
-bun run dev        # watch build
+bun install
 bun run typecheck
 bun run fmt
 bun run hooks      # install the lefthook pre-commit format check
 ```
 
-`src/logo.svg` is the source of truth for the wordmark; `bun run generate` inlines
-it into `src/logo.generated.ts` (gitignored) for the `Logo` component.
+`src/logo.svg` is the source of truth for the wordmark; `src/logo-markup.ts`
+imports it as a raw string for the `Logo` component.
 
 ### Local cross-repo development
 
 To edit `ui` and a consuming site together without pushing tags, point the
-consumer at a local checkout:
+consumer at a local checkout — no rebuild needed, since the consumer compiles
+the source directly:
 
 ```bash
 # in the consuming app's package.json
 "@tomsawyerlabs/ui": "file:../ui"
 ```
 
-Rebuild `ui` (`bun run build`) after changes, or run `bun run dev` for a watch
-build. Switch back to the `github:` dependency before committing.
+Switch back to the `github:` dependency before committing.

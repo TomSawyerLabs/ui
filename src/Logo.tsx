@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import { logoSvg } from "./logo.generated";
+import { logoSvg } from "./logo-markup";
 
 // The Tom Sawyer Labs wordmark. The SVG uses `fill="currentColor"`, so it picks
 // up the surrounding text color (light/dark aware). Inlined as markup so it can
