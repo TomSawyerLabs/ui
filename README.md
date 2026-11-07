@@ -84,6 +84,8 @@ bun run fmt
 bun run hooks      # install the lefthook pre-commit format check
 ```
 
+CI ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) runs `bun run typecheck` and `bun run fmt:check` on every push and pull request.
+
 `src/logo.svg` is the source of truth for the wordmark; `src/logo-markup.ts`
 imports it as a raw string for the `Logo` component.
 
